@@ -6,7 +6,7 @@ main: CentOs\GiftCode
 api: [2.0.0]
 commands:
   gift:
-    usage: /gift <code>
+    usage: /gift <mems|vips> <code>
     description: "Gift code for your little members !!!"
 permissions:
   gift.normal:
