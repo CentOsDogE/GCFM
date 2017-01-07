@@ -34,7 +34,8 @@ class GiftCode extends PluginBase implements Listener{
 				if(!$sender instanceof Player){
 					$sender->sendMessage("This Command Only Works for players! Please perform this command IN GAME!");
 				} else {
-					$sender->getInventory()->addItem(Item::get(364,0,4));
+					if($args[0]){
+					}
 				}
 			return true;
 		}
