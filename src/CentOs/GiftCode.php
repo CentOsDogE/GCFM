@@ -17,8 +17,8 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-		$this->memberscode = new Config($this->getDataFolder() . "playersnormal.yml", Config::YAML);
-		$this->vipscode = new Config($this->getDataFolder() . "playersvip.yml", Config::YAML);
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
+		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
@@ -42,6 +42,38 @@ class GiftCode extends PluginBase implements Listener{
 		$chars = implode($config["char-check"]["allowed-chars"]);
 		return $chars;
 	}
+	public function codeInFile(){
+		$getcode = $this->code->getAll();
+		$codes = implode($getcode["Code"]);
+		return true;
+	}
+	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+		  if(count($args) === 0){
+			  return false;
+		  }
+		  $arg = array_shift($args);
+		  switch($arg){
+		  	case "member":
+		  	case "mems":
+			case "normal":
+				
+				if($sender instanceof Player){
+					$sender->sendMessage("[GFCM] Please run this command in game !!");
+				} else {
+					if($sender->hasPermission("giftcode.members"){
+						if ($this->codeinFile($args[0])){
+							$sender->sendMessage("Yes");
+							return true;
+						} else {
+							$sender->sendMessage("No");
+							return true;
+						}
+					return true;
+					}
+				}
+			return true;
+		    }
+		}
 }			
 				
 				
