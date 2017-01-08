@@ -44,6 +44,7 @@ class GiftCode extends PluginBase implements Listener{
 		$chars = implode($config["char-check"]["allowed-chars"]);
 		return $chars;
 	}
+	
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -58,7 +59,7 @@ class GiftCode extends PluginBase implements Listener{
 					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if($this->code->get("$args[0]")){
+						if(isset($this->code->getAll()["Code"])){
 							$sender->sendMessage("Yes");
 							return true;
 						} else {
