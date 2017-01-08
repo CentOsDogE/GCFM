@@ -44,7 +44,7 @@ class GiftCode extends PluginBase implements Listener{
 	}
 	public function codeInFile(){
 		$getcode = $this->code->getAll();
-		$codes = implode($getcode["Code"]);
+		$codes = in_array($getcode["Code"]);
 		return true;
 	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
