@@ -59,7 +59,7 @@ class GiftCode extends PluginBase implements Listener{
 					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if(isset($this->code->getAll("$args[0]"))){
+						if(($this->code->getAll("$args[0]"))){
 							$sender->sendMessage("Yes");
 							return true;
 						} else {
