@@ -18,7 +18,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"TESTINGC",
+			"Code" => "TESTINGC"
 		));
 		$this->getLogger()->warning("yes");
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
@@ -59,7 +59,7 @@ class GiftCode extends PluginBase implements Listener{
 					$sender->sendMessage("[GFCM] Please run this command in game !!");
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if($this->code->getNested("$args[0]")){
+						if($this->code->get("Code") === $args[0]){
 							$sender->sendMessage("Yes");
 						}
 						else {
