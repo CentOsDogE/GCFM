@@ -18,7 +18,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code" => "TESTINGC",
+			"TESTINGC",
 		));
 		$this->getLogger()->warning("yes");
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
@@ -60,7 +60,7 @@ class GiftCode extends PluginBase implements Listener{
 					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if(($this->code->get("Code") === "$arg[0]")){
+						if(($this->code->getAll()[$arg[0]])){
 							$sender->sendMessage("Yes");
 						} else {
 							$sender->sendMessage("No");
