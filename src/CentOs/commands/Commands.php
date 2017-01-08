@@ -31,22 +31,16 @@ class Commands extends PluginBase implements CommandExecutor{
 				if($sender->hasPermission("giftcode.members"){
 					if(!$sender instanceof Player){
 						$sender->sendMessage("This Command Only Works for players! Please perform this command IN GAME!");
-					return true;
 					} else {
 						if(!$args[0]){
 							$sender->sendMessage($prefix . C::RED . " That's not a code!!");
-						return true;
 						} else {
 							if (!$this->plugin->memberscode->getAll()["Code"]) {
 								$sender->sendMessage($prefix . C::RED . "That code not exist !!!!");
-								return true;
 							} else {
 								$sender->getInventory()->addItem(Item::get(364,0,4));
-								return true;
 							}
-							return true;
 						}
-					return true;
 					}
 				return true;
 				}
