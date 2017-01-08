@@ -20,6 +20,7 @@ class GiftCode extends PluginBase implements Listener{
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
 			"Code" => "TESTINGC",
 		));
+		$this->getLogger()->warning("yes");
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
@@ -61,10 +62,8 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if(($this->code->getAll("Code"))){
 							$sender->sendMessage("Yes");
-							return true;
 						} else {
 							$sender->sendMessage("No");
-							return true;
 						}
 					return true;
 					}
