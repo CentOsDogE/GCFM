@@ -18,14 +18,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"MW8K8HZT",
-			"757B354L",
-			"UPNGXP4B",
-			"BU6SM2FC",
-			"REZK8VYA",
-			"QLQ8XDPT",
-			"CXJ9FQ2V",
-			"TESTINGC"
+			"Code" => "TESTINGC",
 		));
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
@@ -65,7 +58,7 @@ class GiftCode extends PluginBase implements Listener{
 					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if($this->code->getNested()[$args[0]]){
+						if($this->code->getNested($args[0])["Code"]){
 							$sender->sendMessage("Yes");
 							return true;
 						} else {
