@@ -57,7 +57,6 @@ class GiftCode extends PluginBase implements Listener{
 			case "normal":
 				if(!$sender instanceof Player){
 					$sender->sendMessage("[GFCM] Please run this command in game !!");
-					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
 						if($this->code->getAll($args[0])){
@@ -68,7 +67,7 @@ class GiftCode extends PluginBase implements Listener{
 							$sender->sendMessage("No");
 							return true;
 						}
-					return true;
+						return true;
 					}
 				}
 				break;	   
