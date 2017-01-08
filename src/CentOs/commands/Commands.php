@@ -43,7 +43,8 @@ class Commands extends PluginBase implements CommandExecutor{
 							} else {
 								$sender->getInventory()->addItem(Item::get(364,0,4));
 								return true;
-							}	
+							}
+							return true;
 						}
 					return true;
 					}
