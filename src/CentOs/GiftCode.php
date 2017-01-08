@@ -17,7 +17,16 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
+			"MW8K8HZT",
+			"757B354L",
+			"UPNGXP4B",
+			"BU6SM2FC",
+			"REZK8VYA",
+			"QLQ8XDPT",
+			"CXJ9FQ2V",
+			"TESTINGC"
+		));
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
@@ -42,11 +51,6 @@ class GiftCode extends PluginBase implements Listener{
 		$chars = implode($config["char-check"]["allowed-chars"]);
 		return $chars;
 	}
-	public function codeInFile(){
-		$getcode = $this->code->getAll();
-		$codes = in_array($getcode["Code"]);
-		return true;
-	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -61,7 +65,7 @@ class GiftCode extends PluginBase implements Listener{
 					return true;
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if($this->codeinFile($args[0])){
+						if($this->code->getNested($args[0])){
 							$sender->sendMessage("Yes");
 							return true;
 						} else {
