@@ -8,8 +8,10 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
-use pocketmine\item\Item
+use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as C;
+
+use CentOs\GiftCode;
 
 class Commands extends PluginBase implements CommandExecutor{
 	public function __construct(Main $plugin){
@@ -25,24 +27,29 @@ class Commands extends PluginBase implements CommandExecutor{
 		  switch($arg){
 		  	case "member":
 		  	case "mems":
-			  case "normal":
-       if($sender->hasPermission("chatcensor.commands.help"){
-			  	if(!$sender instanceof Player){
-			  		$sender->sendMessage("This Command Only Works for players! Please perform this command IN GAME!");
-            return true;
-			  	} else {
-			  		if(!$args[0]){
-			  			$sender->sendMessage($prefix . C::RED . " That's not a code!!");
-              return true;
-			  		} else { 
-             if (
-              return true;
-              }
-              return true;
-            }
-			  	}
-          return true;
-          }
-		  	return true;
-		  }
-	  }
+			case "normal":
+				if($sender->hasPermission("giftcode.members"){
+					if(!$sender instanceof Player){
+						$sender->sendMessage("This Command Only Works for players! Please perform this command IN GAME!");
+					return true;
+					} else {
+						if(!$args[0]){
+							$sender->sendMessage($prefix . C::RED . " That's not a code!!");
+						return true;
+						} else {
+							if (!$this->plugin->memberscode->getAll()["Code"]) {
+								$sender->sendMessage($prefix . C::RED . "That code not exist !!!!");
+								return true;
+							} else {
+								$sender->getInventory()->addItem(Item::get(364,0,4));
+								return true;
+							}	
+						}
+					return true;
+					}
+				return true;
+				}
+			return true;
+		    }
+		}
+	}		
