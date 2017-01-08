@@ -17,8 +17,9 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-		$this->vips = new Config($this->getDataFolder() . "playersnormal.yml", Config::YAML);
-		$this->vips = new Config($this->getDataFolder() . "playersvip.yml", Config::YAML);
+		$this->memberscode = new Config($this->getDataFolder() . "playersnormal.yml", Config::YAML);
+		$this->vipscode = new Config($this->getDataFolder() . "playersvip.yml", Config::YAML);
+		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
 		if (!$this->purePerms) {
@@ -37,7 +38,7 @@ class GiftCode extends PluginBase implements Listener{
 		
     }
 	public function getChars(){/// From ChatCensor plugin
-		$config = $this->getConfig()->getAll();
+		$config = $this->allowedchars->getAll();
 		$chars = implode($config["char-check"]["allowed-chars"]);
 		return $chars;
 	}
