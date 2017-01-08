@@ -19,6 +19,20 @@ class GiftCode extends PluginBase implements Listener{
 		@mkdir($this->getDataFolder());
 		$this->vips = new Config($this->getDataFolder() . "playersnormal.yml", Config::YAML);
 		$this->vips = new Config($this->getDataFolder() . "playersvip.yml", Config::YAML);
+		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
+		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
+		if (!$this->purePerms) {
+			$this->getLogger()->info(C::RED . "Cannot find PurePerms");
+		} else {
+			$this->getLogger()->info(C::GREEN . "PurePerms found");
+		}
+		$this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "EconomyAPI " . C::AQUA . "plugin...."); 
+		if (!$this->economy) {
+			$this->getLogger()->info(C::RED . "Cannot find EconomyAPI");
+		} else {
+			$this->getLogger()->info(C::GREEN . "EconomyAPI found");
+		}
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
