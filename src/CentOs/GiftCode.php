@@ -36,23 +36,10 @@ class GiftCode extends PluginBase implements Listener{
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
-	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
-		if(count($args) === 0){
-			return false;
-		}
-		$arg = array_shift($args);
-		switch($arg){
-			case "member":
-			case "mems":
-			case "normal":
-				if(!$sender instanceof Player){
-					$sender->sendMessage("This Command Only Works for players! Please perform this command IN GAME!");
-				} else {
-					if($args[0]){
-					}
-				}
-			return true;
-		}
+	public function getChars(){/// From ChatCensor plugin
+		$config = $this->getConfig()->getAll();
+		$chars = implode($config["char-check"]["allowed-chars"]);
+		return $chars;
 	}
 }			
 				
