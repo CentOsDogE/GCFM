@@ -20,9 +20,13 @@ class GiftCode extends PluginBase implements Listener{
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
 			"Code" => "TESTINGC",
 		));
-		$this->getLogger()->warning("yes");
+		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
+			"succeed.code" = "Mã code nhập đã thành công !!",
+			"wrong.code" = "Sai code, code phân biệt chữ Hoa và chữ thường",
+			"fail.code" = "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
+			"defaultlang" = "vie",
+		));
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
-		$this->allowedchars = new Config($this->getDataFolder() . "allowedchars.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
 		if (!$this->purePerms) {
@@ -40,12 +44,6 @@ class GiftCode extends PluginBase implements Listener{
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
-	public function getChars(){/// From ChatCensor plugin
-		$config = $this->allowedchars->getAll();
-		$chars = implode($config["char-check"]["allowed-chars"]);
-		return $chars;
-	}
-	
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -60,11 +58,11 @@ class GiftCode extends PluginBase implements Listener{
 				} else {
 					if($sender->hasPermission("giftcode.members")){
 						if($this->code->get("Code") === $args[0]){
-							$sender->sendMessage("Special Gift Code have been succeed");
-							
+							$sender->sendMessage($this->language->getNested("succeed.code"));
 						}
 						else {
-							$sender->sendMessage("No");
+							$sender->sendMessage($this->language->getNested("wrong.code"));
+						 	$sender->sendMessage($this->language->getNested("fail.code"));
 						}
 						return true;
 					}
