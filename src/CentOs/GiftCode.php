@@ -63,7 +63,7 @@ class GiftCode extends PluginBase implements Listener{
 						if(array_search($args[0] ,$this->code->getAll()["Code-money"]["MCode"])){
 							$money = $this->code->getAll()["Code-money"]["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
-							EconomyAPI::getInstance()->addMoney($sender, array_rand($money));
+							EconomyAPI::getInstance()->addMoney($sender, rand($money));
 						}
 						else {
 							$sender->sendMessage($this->language->get("wrong.code"));
