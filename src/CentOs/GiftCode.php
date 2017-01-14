@@ -12,6 +12,7 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\utils\Config;
 use pocketmine\Server;
+use onebone\economyapi\EconomyAPI;
 use pocketmine\utils\TextFormat as C;
 
 class GiftCode extends PluginBase implements Listener{
@@ -19,7 +20,7 @@ class GiftCode extends PluginBase implements Listener{
 		@mkdir($this->getDataFolder());
 		$testingcode = array("1234567","1234596","1234569");                                                                                                                                                                                                                                                     
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code" => array("TESTINGC","123456C","CODEMEMS"),
+			"Code" => array("abcdefg","123456C","CODEMEMS"),
 		));
 		$this->code->save();
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
@@ -52,16 +53,20 @@ class GiftCode extends PluginBase implements Listener{
 		  }
 		  $arg = array_shift($args);
 		  switch($arg){
-		  	case "member":
-		  	case "mems":
-			case "normal":
+		  	case "item":
+				  ///TO-DO
+				  break;
+		  	case "vip":
+				   ///TO-DO
+				  break;
+			case "money":
 				if(!$sender instanceof Player){
 					$sender->sendMessage("[GFCM] Please run this command in game !!");
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] ,$this->code->getAll()["Code"])){
+						if(array_search($args[0] ,$this->code->getAll()["Code-money"]["MCode"])){
 							$sender->sendMessage($this->language->get("succeed.code"));
-							
+							EconomyAPI::getInstance()->addMoney($sender, "1000");
 						}
 						else {
 							$sender->sendMessage($this->language->get("wrong.code"));
