@@ -59,7 +59,7 @@ class GiftCode extends PluginBase implements Listener{
 					$sender->sendMessage("[GFCM] Please run this command in game !!");
 				} else {
 					if($sender->hasPermission("giftcode.members")){
-						if($this->code->get("Code") === $args[0]){
+						if($this->code->get("Code", $args[0])){
 							$sender->sendMessage($this->language->get("succeed.code"));
 							
 						}
