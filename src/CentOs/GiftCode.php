@@ -22,6 +22,7 @@ class GiftCode extends PluginBase implements Listener{
 		if ($this->code->get("Code")==null) {
 			$this->code->set("Code", $testingcode);
 		}
+		$this->code->save();
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
