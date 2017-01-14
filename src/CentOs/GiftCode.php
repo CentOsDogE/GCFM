@@ -26,6 +26,18 @@ class GiftCode extends PluginBase implements Listener{
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
 			"defaultlang" => "vie",
 		));
+		if ($this->language->get("defaultlang") === "vie") {
+			$this->getLogger->warning("Selected Defaultlang: Vietnamese");
+		} else {
+			$this->getLogger->warning("Cannot find Defaultlang...");
+			$this->getLogger->warning("Creating a language file... (en)");
+			$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
+			"succeed.code" => "Succeed Code, You Will Get The Prize",
+			"wrong.code" => "Wrong Code (A) and (a) will be distinguished",
+			"fail.code" => "Failed code",
+			"defaultlang" => $this->language->get("defaultlang"),
+		));
+		}
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
