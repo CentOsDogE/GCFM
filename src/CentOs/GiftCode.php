@@ -17,7 +17,7 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-		$testingcode = array(1234567,1234596,1234569);                                                                                                                                                                                                                                                     
+		$testingcode = array("1234567","1234596","1234569");                                                                                                                                                                                                                                                     
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
 		if ($this->code->get("Code")==null) {
 			$this->code->set("Code", $testingcode);
@@ -28,19 +28,6 @@ class GiftCode extends PluginBase implements Listener{
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
 			"defaultlang" => "vie",
 		));
-		if ($this->language->get("defaultlang") === "vie") {
-			$this->getLogger()->warning("Selected Defaultlang: Vietnamese");
-		} else {
-			$this->getLogger()->error("Cannot find Defaultlang...");
-			$this->getLogger()->warning("Creating a language file... (en)");
-			$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
-			"succeed.code" => "Succeed Code, You Will Get The Prize",
-			"wrong.code" => "Wrong Code (A) and (a) will be distinguished",
-			"fail.code" => "Failed code",
-			"defaultlang" => $this->language->get("defaultlang"),
-		));
-			$this->language->save();
-		}
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
