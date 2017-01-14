@@ -18,10 +18,9 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 		$testingcode = array("1234567","1234596","1234569");                                                                                                                                                                                                                                                     
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
-		if ($this->code->get("Code")==null) {
-			$this->code->set("Code", $testingcode);
-		}
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
+			"Code" => array("TESTINGC","123456C","CODEMEMS"),
+		));
 		$this->code->save();
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
