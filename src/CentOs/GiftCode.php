@@ -19,7 +19,7 @@ class GiftCode extends PluginBase implements Listener{
 		@mkdir($this->getDataFolder());
 		$testingcode = array(1234567,1234596,1234569);                                                                                                                                                                                                                                                     
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
-		if ($this->code->get("Code")=null) {
+		if ($this->code->get("Code")==null) {
 			$this->code->set("Code", $testingcode);
 		}
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
