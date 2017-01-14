@@ -17,12 +17,8 @@ use pocketmine\utils\TextFormat as C;
 
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
-		@mkdir($this->getDataFolder());
-		$testingcode = array("1234567","1234596","1234569");                                                                                                                                                                                                                                                     
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code" => array("abcdefg","123456C","CODEMEMS"),
-		));
-		$this->code->save();
+		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
