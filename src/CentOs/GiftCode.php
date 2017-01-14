@@ -27,10 +27,10 @@ class GiftCode extends PluginBase implements Listener{
 			"defaultlang" => "vie",
 		));
 		if ($this->language->get("defaultlang") === "vie") {
-			$this->getLogger->warning("Selected Defaultlang: Vietnamese");
+			$this->getLogger()->warning("Selected Defaultlang: Vietnamese");
 		} else {
-			$this->getLogger->warning("Cannot find Defaultlang...");
-			$this->getLogger->warning("Creating a language file... (en)");
+			$this->getLogger()->error("Cannot find Defaultlang...");
+			$this->getLogger()->warning("Creating a language file... (en)");
 			$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Succeed Code, You Will Get The Prize",
 			"wrong.code" => "Wrong Code (A) and (a) will be distinguished",
