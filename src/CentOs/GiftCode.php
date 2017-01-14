@@ -37,6 +37,7 @@ class GiftCode extends PluginBase implements Listener{
 			"fail.code" => "Failed code",
 			"defaultlang" => $this->language->get("defaultlang"),
 		));
+			$this->language->save();
 		}
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
@@ -71,7 +72,7 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if($this->code->get("Code") === $args[0]){
 							$sender->sendMessage($this->language->get("succeed.code"));
-							$sender->sendMessage("hmm");
+							
 						}
 						else {
 							$sender->sendMessage($this->language->get("wrong.code"));
