@@ -21,10 +21,10 @@ class GiftCode extends PluginBase implements Listener{
 			"Code" => "TESTINGC",
 		));
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
-			"succeed.code" = "Mã code nhập đã thành công !!",
-			"wrong.code" = "Sai code, code phân biệt chữ Hoa và chữ thường",
-			"fail.code" = "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
-			"defaultlang" = "vie",
+			"succeed.code" => "Mã code nhập đã thành công !!",
+			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
+			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
+			"defaultlang" => "vie",
 		));
 		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
