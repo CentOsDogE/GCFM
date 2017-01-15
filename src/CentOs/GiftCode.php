@@ -61,11 +61,11 @@ class GiftCode extends PluginBase implements Listener{
  				} else {
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
-							$money = $this->code->getAll()["Code-money"]["money"];
+							$money = $this->code->getAll()["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
-							$this->codeuser = $this->usedcode->getNested("Used-Code");
-							array_push($codeuser, $sender);
+							$codeuser = $this->usedcode->getNested("Used-Code");
+							array_push($codeuser, $sender->getName());
 							$this->usedcode->setNested("Used-Code", $codeuser);
 							$this->usedcode->save();
 						} else {
