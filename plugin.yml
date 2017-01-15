@@ -6,12 +6,9 @@ main: CentOs\GiftCode
 api: [2.0.0]
 commands:
   gift:
-    usage: /gift <mems|vips> <code>
+    usage: /gift <item|vip|money> <code>
     description: "Gift code for your little members !!!"
 permissions:
-  gift.normal:
-    default: op
+  gift.use:
+    default: true
     description: "Player can using giftcode"
-  gift.vips:
-    default: op
-    description: "Player vips can using giftcode"
