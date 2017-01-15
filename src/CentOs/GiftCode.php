@@ -50,7 +50,7 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
-				  $this->usedcode->set("Used-Code", $args[0])
+				  $this->usedcode->set("Used-Code", $args[0]);
 				  break;
 		  	case "vip":
 				   ///TO-DO
