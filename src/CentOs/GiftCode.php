@@ -18,9 +18,9 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
-		$usedcode = new Config($this->getDataFolder() . "usedcode.yml", Config::YAML);
-		$language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
+		$this->usedcode = new Config($this->getDataFolder() . "usedcode.yml", Config::YAML);
+		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
@@ -58,14 +58,14 @@ class GiftCode extends PluginBase implements Listener{
 			case "money":
 				  if
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] , $code->getAll()["Code-money"]["MCode"])){
-							$money = $code->getAll()["Code-money"]["money"];
-							$sender->sendMessage($language->get("succeed.code"));
+						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
+							$money = $this->code->getAll()["Code-money"]["money"];
+							$sender->sendMessage($this->language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
-							$codeuser = $usedcode->getNested("Used-Code");
+							$this->codeuser = $usedcode->getNested("Used-Code");
 							array_push($codeuser, $sender);
-							$usedcode->setNested("Used-Code", $codeuser);
-							$usedcode->save();
+							$this->usedcode->setNested("Used-Code", $codeuser);
+							$this->usedcode->save();
 						}
 						else {
 							$sender->sendMessage($language->get("wrong.code"));
