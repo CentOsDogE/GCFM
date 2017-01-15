@@ -50,7 +50,7 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
-				  ///TO-DO
+				  $this->usedcode->set("Used-Code", $args[0])
 				  break;
 		  	case "vip":
 				   ///TO-DO
@@ -65,7 +65,7 @@ class GiftCode extends PluginBase implements Listener{
 							$sender->sendMessage($this->language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
 							$codeuser = $this->usedcode->getNested("Used-Code");
-							array_push($codeuser, $sender->getName());
+							array_push($codeuser, $sender);
 							$this->usedcode->setNested("Used-Code", $codeuser);
 							$this->usedcode->save();
 						} else {
@@ -75,7 +75,7 @@ class GiftCode extends PluginBase implements Listener{
 						return true;
 					}
 				  }
-				break;	   
+				break;				
 			return true;
 		    }
 		}
