@@ -56,8 +56,9 @@ class GiftCode extends PluginBase implements Listener{
 				   ///TO-DO
 				  break;
 			case "money":
+				  if
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] ,$code->getAll()["Code-money"]["MCode"])){
+						if(array_search($args[0] , $code->getAll()["Code-money"]["MCode"])){
 							$money = $code->getAll()["Code-money"]["money"];
 							$sender->sendMessage($language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
