@@ -50,7 +50,10 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
+				if($sender->hasPermission("giftcode.members")){
 				  $this->usedcode->set("Used-Code", $args[0]);
+					return true;
+				}
 				  break;
 		  	case "vip":
 				   ///TO-DO
