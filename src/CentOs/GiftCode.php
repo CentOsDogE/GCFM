@@ -18,14 +18,14 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
-		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
+		$code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
+		$usedcode = new Config($this->getDataFolder() . "usedcode.yml", Config::YAML);
+		$language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
 			"defaultlang" => "vie",
 		));
-		$this->players = new Config($this->getDataFolder() . "players.yml", Config::YAML);
 		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
 		if (!$this->purePerms) {
@@ -57,14 +57,15 @@ class GiftCode extends PluginBase implements Listener{
 				  break;
 			case "money":
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] ,$this->code->getAll()["Code-money"]["MCode"])){
-							$money = $this->code->getAll()["Code-money"]["money"];
-							$sender->sendMessage($this->language->get("succeed.code"));
-							EconomyAPI::getInstance()->addMoney($sender, $money);
+						if(array_search($args[0] ,$code->getAll()["Code-money"]["MCode"])){
+							$money = $code->getAll()["Code-money"]["money"];
+							$sender->sendMessage($language->get("succeed.code"));
+							EconomyAPI::getInstance()->addMoney($sender, $money); 
+							
 						}
 						else {
-							$sender->sendMessage($this->language->get("wrong.code"));
-						 	$sender->sendMessage($this->language->get("fail.code"));
+							$sender->sendMessage($language->get("wrong.code"));
+						 	$sender->sendMessage($language->get("fail.code"));
 						}
 						return true;
 					}
