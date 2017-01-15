@@ -69,8 +69,8 @@ class GiftCode extends PluginBase implements Listener{
 							$this->usedcode->setNested("Used-Code", $codeuser);
 							$this->usedcode->save();
 						} else {
-							$sender->sendMessage($language->get("wrong.code"));
-						 	$sender->sendMessage($language->get("fail.code"));
+							$sender->sendMessage($this->language->get("wrong.code"));
+						 	$sender->sendMessage($this->language->get("fail.code"));
 						}
 						return true;
 					}
