@@ -56,14 +56,11 @@ class GiftCode extends PluginBase implements Listener{
 				   ///TO-DO
 				  break;
 			case "money":
-				if(!$sender instanceof Player){
-					$sender->sendMessage("[GFCM] Please run this command in game !!");
-				} else {
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] ,$this->code->getAll()["Code-money"]["MCode"])){
 							$money = $this->code->getAll()["Code-money"]["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
-							EconomyAPI::getInstance()->addMoney($sender, rand($money));
+							EconomyAPI::getInstance()->addMoney($sender, $money);
 						}
 						else {
 							$sender->sendMessage($this->language->get("wrong.code"));
@@ -71,7 +68,6 @@ class GiftCode extends PluginBase implements Listener{
 						}
 						return true;
 					}
-				}
 				break;	   
 			return true;
 		    }
