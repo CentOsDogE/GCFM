@@ -52,7 +52,8 @@ class GiftCode extends PluginBase implements Listener{
 		  	case "item":
 				if($sender->hasPermission("giftcode.members")){
 				 	$array = $this->usedcode->getNested("Example");
-					$this->usedcode->setNested("Example", $args[0]);
+					$hell = array_push($array, $args[0]);
+					$this->usedcode->setNested("Example", $hello);
 					$this->usedcode->save();
 					return true;
 				}
