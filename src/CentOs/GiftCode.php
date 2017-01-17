@@ -43,6 +43,17 @@ class GiftCode extends PluginBase implements Listener{
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
+	public function usedCode($codeuser, $typecode, $codes){
+		$codeuser = strtolower($codeuser);
+		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
+		$data = array(
+			"name" => $this->codeuser,
+			"used-code" => $typecode . "-" . $codes ,
+			);
+		$mtp->setAll($data);
+		$mtp->save()
+		return true;
+	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -50,13 +61,6 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
-				if($sender->hasPermission("giftcode.members")){
-				 	$array = $this->usedcode->getAll()["Used-Code"];
-					$hell = array_push($array, $args[0]);
-					$this->usedcode->setNested("Used-Code", $hell);
-					$this->usedcode->save();
-					return true;
-				}
 				  break;
 		  	case "vip":
 				   ///TO-DO
@@ -70,10 +74,7 @@ class GiftCode extends PluginBase implements Listener{
 							$money = $this->code->getAll()["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
-							$codeuser = $this->usedcode->getNested("Used-Code");
-							array_push($codeuser, $sender);
-							$this->usedcode->setNested("Used-Code", $codeuser);
-							$this->usedcode->save();
+							$this->usedCode($sender,$typecode as "Money", $args[0]);
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
