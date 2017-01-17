@@ -47,7 +47,7 @@ class GiftCode extends PluginBase implements Listener{
 		$codeuser = strtolower($codeuser);
 		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
 		$data = array(
-			"name" => $this->codeuser,
+			"name" => $codeuser,
 			"used-code" => $typecode . "-" . $codes ,
 			);
 		$mtp->setAll($data);
