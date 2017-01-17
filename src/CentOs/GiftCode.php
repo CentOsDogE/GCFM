@@ -74,7 +74,7 @@ class GiftCode extends PluginBase implements Listener{
 							$money = $this->code->getAll()["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
 							EconomyAPI::getInstance()->addMoney($sender, $money); 
-							$this->usedCode($sender,$typecode as "Money", $args[0]);
+							$this->usedCode($sender,"Money", $args[0]);
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
