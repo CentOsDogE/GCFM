@@ -48,12 +48,15 @@ class GiftCode extends PluginBase implements Listener{
 		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
 		$data = array(
 			"name" => $codeuser,
-			"used-code" => $typecode . "-" . $codes ,
+			"used-". $typecode . "-code" => $codes ,
 			);
 		$mtp->setAll($data);
 		$mtp->save();
 		return true;
 	}
+	public function userExists($codeuser){
+    	return file_exists($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"));
+    	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -73,8 +76,12 @@ class GiftCode extends PluginBase implements Listener{
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
 							$money = $this->code->getAll()["money"];
 							$sender->sendMessage($this->language->get("succeed.code"));
-							EconomyAPI::getInstance()->addMoney($sender, $money); 
-							$this->usedCode($sender,"Money", $args[0]);
+							if (!$this->userExists($sender->getName())) { 	
+								EconomyAPI::getInstance()->addMoney($sender, $money);
+								$this->usedCode($sender->getName(),"Money", $args[0]);
+							} else {
+								EconomyAPI::getInstance()->addMoney($sender, $money);	
+							}
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
