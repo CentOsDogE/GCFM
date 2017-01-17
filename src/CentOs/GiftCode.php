@@ -51,7 +51,7 @@ class GiftCode extends PluginBase implements Listener{
 			"used-code" => $typecode . "-" . $codes ,
 			);
 		$mtp->setAll($data);
-		$mtp->save()
+		$mtp->save();
 		return true;
 	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
