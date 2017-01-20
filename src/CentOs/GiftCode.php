@@ -47,7 +47,7 @@ class GiftCode extends PluginBase implements Listener{
 		$codeuser = strtolower($codeuser);
 		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
 		$data = array(
-			$codes ,
+			"CODE" => $codes ,
 			);
 		$mtp->setAll($data);
 		$mtp->save();
@@ -65,12 +65,12 @@ class GiftCode extends PluginBase implements Listener{
 		  	case "item":
 				  if (!$this->userExists($sender->getName())) { 	
 								$this->usedCode($sender->getName(), $args[0]);
-					  			$array = $mtp->getNested($mtp);
-								array_push($mtp, $args[0]);
-								$mtp->setNested($mtp, $array);
-								$mtp->save();
 							} else {
 					  			$sender->sendMessage("Hell or No");
+					  			$array = $mtp->getNested("CODE");
+								array_push($array, $args[0]);
+								$mtp->setNested("CODE", $array);
+								$mtp->save();
 							}
 				  break;
 		  	case "vip":
