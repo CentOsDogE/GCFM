@@ -43,12 +43,11 @@ class GiftCode extends PluginBase implements Listener{
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
-	public function usedCode($codeuser, $typecode, $codes){
+	public function usedCode($codeuser, $codes){
 		$codeuser = strtolower($codeuser);
 		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
 		$data = array(
-			"name" => $codeuser,
-			"used-". $typecode . "-code" => $codes ,
+			$codes ,
 			);
 		$mtp->setAll($data);
 		$mtp->save();
@@ -64,6 +63,12 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
+				  if (!$this->userExists($sender->getName())) { 	
+								EconomyAPI::getInstance()->addMoney($sender, $money);
+								$this->usedCode($sender->getName(), $args[0]);
+							} else {
+								EconomyAPI::getInstance()->addMoney($sender, $money);	
+							}
 				  break;
 		  	case "vip":
 				   ///TO-DO
@@ -78,7 +83,7 @@ class GiftCode extends PluginBase implements Listener{
 							$sender->sendMessage($this->language->get("succeed.code"));
 							if (!$this->userExists($sender->getName())) { 	
 								EconomyAPI::getInstance()->addMoney($sender, $money);
-								$this->usedCode($sender->getName(),"Money", $args[0]);
+								$this->usedCode($sender->getName(), $args[0]);
 							} else {
 								EconomyAPI::getInstance()->addMoney($sender, $money);	
 							}
