@@ -16,6 +16,7 @@ use onebone\economyapi\EconomyAPI;
 use pocketmine\utils\TextFormat as C;
 
 class GiftCode extends PluginBase implements Listener{
+	public $mtp;
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
