@@ -64,10 +64,9 @@ class GiftCode extends PluginBase implements Listener{
 		  switch($arg){
 		  	case "item":
 				  if (!$this->userExists($sender->getName())) { 	
-								EconomyAPI::getInstance()->addMoney($sender, $money);
 								$this->usedCode($sender->getName(), $args[0]);
 							} else {
-								EconomyAPI::getInstance()->addMoney($sender, $money);	
+					  			$sender->sendMessage("Hell or No");
 							}
 				  break;
 		  	case "vip":
