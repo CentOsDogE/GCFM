@@ -65,6 +65,10 @@ class GiftCode extends PluginBase implements Listener{
 		  	case "item":
 				  if (!$this->userExists($sender->getName())) { 	
 								$this->usedCode($sender->getName(), $args[0]);
+					  			$array = $mtp->getNested($mtp);
+								array_push($mtp, $args[0]);
+								$mtp->setNested($mtp, $array);
+								$mtp->save();
 							} else {
 					  			$sender->sendMessage("Hell or No");
 							}
