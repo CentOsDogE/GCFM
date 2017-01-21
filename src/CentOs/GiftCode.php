@@ -48,6 +48,11 @@ class GiftCode extends PluginBase implements Listener{
 		$array = $result->fetchArray(SQLITE3_ASSOC);
 		return empty($array) == false;
 	}
+	public function playerUseToo($player){
+		$result = $this->db->query("SELECT * FROM playerusingcode WHERE player='$player';");
+		$array = $result->fetchArray(SQLITE3_ASSOC);
+		return empty($array) == false;
+	}
 	public function codeisUsed($codes){
 		$code = strtolower($codes);
 		$and = $this->db->query("SELECT * FROM code WHERE code='$codes';");
@@ -80,7 +85,7 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
 							if (!$this->codeisUsed($args[0])) {
-								if(!$this->playerUse($sender->getName(), $args[0])){
+								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$this->playerUseCode($sender->getName(), $args[0]);
