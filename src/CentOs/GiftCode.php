@@ -73,7 +73,7 @@ class GiftCode extends PluginBase implements Listener{
 			case "money":
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
-							if (!$this->codeisUsed($args[0]) {
+							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
