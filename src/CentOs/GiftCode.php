@@ -25,6 +25,7 @@ class GiftCode extends PluginBase implements Listener{
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
+			"code.is.used" => "Code đã được dùng.",
 			"defaultlang" => "vie",
 		));
 		///SQLite is recommended
@@ -53,9 +54,8 @@ class GiftCode extends PluginBase implements Listener{
 		$andArr = $and->fetchArray(SQLITE3_ASSOC);
 		return empty($andArr) == false;
 	}
-	public function setCode($player, $codes){
-		$code = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");
-		$code->bindValue(":player", $player);
+	public function setCode($codes){
+		$code = $this->db->prepare("INSERT INTO code (code) VALUE (:code);");
 		$code->bindValue(":code", $codes);
 		$result = $code->execute();
 	}
@@ -73,12 +73,15 @@ class GiftCode extends PluginBase implements Listener{
 			case "money":
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
+							if (!$this->codeisUsed($args[0]) {
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
-									$this->setCode($sender->getName(), $args[0]);
+									$this->setCode($args[0]);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
+							} else {
+								$sender->sendMessage($this->language->get("code.is.used"));
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
