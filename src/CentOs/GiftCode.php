@@ -60,7 +60,7 @@ class GiftCode extends PluginBase implements Listener{
 		$result = $code->execute();
 	}
 	public function playerUseCode($player, $code){
-		$result = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");
+		$result = $this->db->prepare("INSERT OR REPLACE INTO playerusingcode (player, code) VALUES (:player, :code);");
 		$result->bindValue(":player", $player);
 		$result->bindValue(":code", $code);
 		$end = $result->execute();	
