@@ -53,8 +53,8 @@ class GiftCode extends PluginBase implements Listener{
 		$andArr = $and->fetchArray(SQLITE3_ASSOC);
 		return empty($andArr) == false;
 	}
-	public function setCode($player, $codes){
-		$code = $this->db->prepare("INSERT INTO playerusingcode (code) VALUES (:code);");
+	public function setCode($codes){
+		$code = $this->db->prepare("INSERT INTO playerusingcode (code) VALUE (:code);");
 		$code->bindValue(":code", $codes);
 		$result = $code->execute();
 	}
