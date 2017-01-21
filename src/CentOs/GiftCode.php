@@ -69,7 +69,7 @@ class GiftCode extends PluginBase implements Listener{
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
-									$setplayer = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");							
+									$setplayer = $this->db->prepare("INSERT OR REPLACE INTO playerusingcode (player, code) VALUES (:player, :code);");							
 									$setplayer->bindValue(":player", $sender->getName());
 									$setplayer->bindValue(":code", $args[0]);
 									$enditnow = $setplayer->execute();
