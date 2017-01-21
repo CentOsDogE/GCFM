@@ -67,7 +67,6 @@ class GiftCode extends PluginBase implements Listener{
 			case "money":
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
-							if($this)
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$setplayer = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");							
@@ -77,7 +76,6 @@ class GiftCode extends PluginBase implements Listener{
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
-							}
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
