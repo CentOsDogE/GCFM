@@ -53,6 +53,11 @@ class GiftCode extends PluginBase implements Listener{
 		$andArr = $and->fetchArray(SQLITE3_ASSOC);
 		return empty($andArr) == false;
 	}
+	public function setCode($player, $codes){
+		$code = $this->db->prepare("INSERT INTO playerusingcode (code) VALUES (:code);");
+		$code->bindValue(":code", $codes);
+		$result = $code->execute();
+	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -69,10 +74,7 @@ class GiftCode extends PluginBase implements Listener{
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
-									$setplayer = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");							
-									$setplayer->bindValue(":player", $sender->getName());
-									$setplayer->bindValue(":code", $args[0]);
-									$enditnow = $setplayer->execute();
+									$this->setCode($args[0]);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
