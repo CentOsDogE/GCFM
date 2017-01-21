@@ -82,6 +82,7 @@ class GiftCode extends PluginBase implements Listener{
 								}
 							} else {
 								$sender->sendMessage($this->language->get("code.is.used"));
+							}
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
 						 	$sender->sendMessage($this->language->get("fail.code"));
