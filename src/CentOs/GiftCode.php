@@ -27,13 +27,11 @@ class GiftCode extends PluginBase implements Listener{
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
 			"defaultlang" => "vie",
 		));
-		$this->purePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
-		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "PurePerms " . C::AQUA . "plugin...."); 
-		if (!$this->purePerms) {
-			$this->getLogger()->info(C::RED . "Cannot find PurePerms");
-		} else {
-			$this->getLogger()->info(C::GREEN . "PurePerms found");
-		}
+		///SQLite is recommended
+		$this->db = new \SQLite3($this->getDataFolder() . "CodeIsUsed.db");
+		$this->db->exec("CREATE TABLE IF NOT EXISTS playerusingcode (player TEXT PRIMARY KEY COLLATE NOCASE,code TEXT)");
+		$this->db->exec("CREATE TABLE IF NOT EXISTS code (code TEXT)");
+		///END OF SQLITE3
 		$this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "EconomyAPI " . C::AQUA . "plugin...."); 
 		if (!$this->economy) {
@@ -44,19 +42,19 @@ class GiftCode extends PluginBase implements Listener{
 		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
 		
     }
-	public function usedCode($codeuser, $codes){
-		$codeuser = strtolower($codeuser);
-		$mtp = new Config($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"), Config::YAML);
-		$data = array(
-			"CODE" => $codes ,
-			);
-		$mtp->setAll($data);
-		$mtp->save();
-		return true;
+	public function playerUse($player, $code){
+		$player = strtolower($player);
+		$code = strtolower($code);
+		$result = $this->db->query("SELECT * FROM code WHERE player='$player' AND code='$code';");
+		$array = $result->fetchArray(SQLITE3_ASSOC);
+		return empty($array) == false;
 	}
-	public function userExists($codeuser){
-    	return file_exists($this->getDataFolder() . "players/" . strtolower($codeuser . ".yml"));
-    	}
+	public function codeisUsed($codes){
+		$code = strtolower($codes);
+		$and = $this->db->query("SELECT * FROM code WHERE code='$codes';");
+		$andArr = $and->fetchArray(SQLITE3_ASSOC);
+		return empty($andArr) == false;
+	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -64,15 +62,6 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 		  	case "item":
-				  if (!$this->userExists($sender->getName())) { 	
-								$this->usedCode($sender->getName(), $args[0]);
-							} else {
-					  			$sender->sendMessage("Hell or No");
-					  			$array = $mtp->getAll()["CODE"];
-								array_push($array, $args[0]);
-								$mtp->setNested("CODE", $array);
-								$mtp->save();
-							}
 				  break;
 		  	case "vip":
 				   ///TO-DO
@@ -83,13 +72,9 @@ class GiftCode extends PluginBase implements Listener{
  				} else {
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
-							$money = $this->code->getAll()["money"];
-							$sender->sendMessage($this->language->get("succeed.code"));
-							if (!$this->userExists($sender->getName())) { 	
-								EconomyAPI::getInstance()->addMoney($sender, $money);
-								$this->usedCode($sender->getName(), $args[0]);
-							} else {
-								EconomyAPI::getInstance()->addMoney($sender, $money);	
+							if(!$this->playerUse($sender->getName(), $args[0])){
+								$sender->sendMessage($this->language->get("succeed.code"));
+								return true;
 							}
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
