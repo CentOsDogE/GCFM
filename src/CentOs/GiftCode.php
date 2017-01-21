@@ -71,7 +71,8 @@ class GiftCode extends PluginBase implements Listener{
 						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
 							if(!$this->playerUse($sender->getName(), $args[0])){
 								$sender->sendMessage($this->language->get("succeed.code"));
-								return true;
+							} else {
+								$sender->sendMessage("You already have this prize !!!!");
 							}
 						} else {
 							$sender->sendMessage($this->language->get("wrong.code"));
