@@ -55,7 +55,7 @@ class GiftCode extends PluginBase implements Listener{
 		return empty($andArr) == false;
 	}
 	public function setCode($codes){
-		$code = $this->db->prepare("INSERT INTO code (code) VALUE (:code);");
+		$code = $this->db->prepare("INSERT OR REPLACE INTO code (code) VALUES (:code);");
 		$code->bindValue(":code", $codes);
 		$result = $code->execute();
 	}
