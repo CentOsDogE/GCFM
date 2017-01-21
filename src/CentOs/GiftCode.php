@@ -59,6 +59,12 @@ class GiftCode extends PluginBase implements Listener{
 		$code->bindValue(":code", $codes);
 		$result = $code->execute();
 	}
+	public function playerUseCode($player, $code){
+		$result = $this->db->prepare("INSERT INTO playerusingcode (player, code) VALUES (:player, :code);");
+		$result->bindValue(":player", $player);
+		$result->bindValue(":code", $code);
+		$end = $result->execute();	
+	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -77,6 +83,7 @@ class GiftCode extends PluginBase implements Listener{
 								if(!$this->playerUse($sender->getName(), $args[0])){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
+									$this->playerUseCode($sender->getName(), $args[0));
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
