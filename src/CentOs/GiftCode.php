@@ -45,7 +45,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function playerUse($player, $code){
 		$player = strtolower($player);
 		$code = strtolower($code);
-		$result = $this->db->query("SELECT * FROM code WHERE player='$player' AND code='$code';");
+		$result = $this->db->query("SELECT * FROM playerusingcode WHERE player='$player' AND code='$code';");
 		$array = $result->fetchArray(SQLITE3_ASSOC);
 		return empty($array) == false;
 	}
