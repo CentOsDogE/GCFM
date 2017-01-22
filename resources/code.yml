@@ -1,31 +1,7 @@
-///Hey Justt Newwww
-Code-money:
+Code:
   MCode:
+    - 1
     - MONEYCODE
-  money: 
-    - 1000
-    - 2000        
-    - 1500
-Code-vip:
-  VCode:
-    - VIPCODES
-  days:
-    - 7
-Code-item:
-  ICode:
-    - ITEMCODE
-  items:
-    - - 267
-      - 0
-      - 1
-    - - 276
-      - 0
-      - 1
-    - - 364
-      - 0
-      - 64
-* 8888     8888   
-* 888888 888888
-* 888  888  888
-* 888       888
-* 888       888
+    - CODEHERE
+money: 1000 ///ECONOMYAPI-REQUIRED
+xu: 10 ///MASSIVEECONOMY-REQUIRED
