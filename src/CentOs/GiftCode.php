@@ -13,6 +13,7 @@ use pocketmine\event\Listener;
 use pocketmine\utils\Config;
 use pocketmine\Server;
 use onebone\economyapi\EconomyAPI;
+use MassiveEconomy\MassiveEconomyAPI;
 use pocketmine\utils\TextFormat as C;
 
 class GiftCode extends PluginBase implements Listener{
@@ -76,19 +77,19 @@ class GiftCode extends PluginBase implements Listener{
 		  }
 		  $arg = array_shift($args);
 		  switch($arg){
-		  	case "item":
-				  break;
-		  	case "vip":
-				   ///TO-DO
-				  break;
-			case "money":
+			  case "reload":
+				  ///TODO
+			case "get":
+				  if (!$sender instanceof Player) {
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] , $this->code->getAll()["Code-money"]["MCode"])){
+						if(array_search($args[0] , $this->code->getAll()["Code"]["MCode"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$this->playerUseCode($sender->getName(), $args[0]);
+									MassiveEconomyAPI::getInstance()->payPlayer($sender, $this->code->get("xu"));
+									EconomyAPI::getInstance()->addMoney($sender, $this->code->get("money"));
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
@@ -101,6 +102,8 @@ class GiftCode extends PluginBase implements Listener{
 						}
 						return true;
 					}
+					  return true;
+				  }
 				break;				
 			return true;
 		    }
