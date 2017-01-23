@@ -80,9 +80,6 @@ class GiftCode extends PluginBase implements Listener{
 			  case "reload":
 				  ///TODO
 			case "get":
-				  if (!$sender instanceof Player) {
-					  $sender->sendMessage("[GFCM] Please run this command in game !!");
-				  } else {
 					if($sender->hasPermission("giftcode.members")){
 						if(array_search($args[0] , $this->code->getAll()["Code"]["MCode"])){
 							if (!$this->codeisUsed($args[0])) {
@@ -104,7 +101,6 @@ class GiftCode extends PluginBase implements Listener{
 						}
 						return true;
 					}
-				  }	 
 				break;				
 			return true;
 		    }
