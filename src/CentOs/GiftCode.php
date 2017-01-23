@@ -21,7 +21,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code" => "MCode" => "1",
+			"Code"("MCode") => "1",
 			"money" => "1000",
 			"xu" => "10",
 		));
