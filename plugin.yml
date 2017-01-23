@@ -1,14 +1,17 @@
 name: GiftCodeForMembers
 author: ["CentOs"]
-version: 0.0.1
+version: 0.0.2
 description: This plugin for server !!!
 main: CentOs\GiftCode
 api: [2.0.0]
 commands:
   gift:
-    usage: /gift <item|vip|money> <code>
+    usage: /gift <get|reload>
     description: "Gift code for your little members !!!"
 permissions:
-  gift.use:
+  giftcode.members:
     default: true
     description: "Player can using giftcode"
+  giftcode.ops:
+    default: op
+    description: "OP reload all the code ?"
