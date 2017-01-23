@@ -52,7 +52,7 @@ class GiftCode extends PluginBase implements Listener{
 		} else {
 			$this->getLogger()->info(C::GREEN . "EconomyAPI found");
 		}
-		$this->getLogger()->info("§a" . $this->getDescription()->getFullName() . " enabled!");
+		$this->getLogger()->info("§a GiftCode enabled!");
 		
     }
 	public function playerUse($player, $code){
