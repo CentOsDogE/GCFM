@@ -20,13 +20,17 @@ class GiftCode extends PluginBase implements Listener{
 	public $mtp;
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
-		$this->usedcode = new Config($this->getDataFolder() . "usedcode.yml", Config::YAML);
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
+			"Code" => "MCode" => "1",
+			"money" => "1000",
+			"xu" => "10",
+		));
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
 			"code.is.used" => "Code đã được dùng.",
+			"error.code" => "Vui lòng nhập code",
 			"defaultlang" => "vie",
 		));
 		///SQLite is recommended
@@ -34,6 +38,13 @@ class GiftCode extends PluginBase implements Listener{
 		$this->db->exec("CREATE TABLE IF NOT EXISTS playerusingcode (player TEXT PRIMARY KEY COLLATE NOCASE,code TEXT)");
 		$this->db->exec("CREATE TABLE IF NOT EXISTS code (code TEXT)");
 		///END OF SQLITE3
+		$this->mecon = $this->getServer()->getPluginManager()->getPlugin("MassiveEconomy");
+		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "MassiveEconomy " . C::AQUA . "plugin...."); 
+		if (!$this->mecon) {
+			$this->getLogger()->info(C::RED . "Cannot find MassiveEconomy");
+		} else {
+			$this->getLogger()->info(C::GREEN . "MassiveEconomy found");
+		}
 		$this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "EconomyAPI " . C::AQUA . "plugin...."); 
 		if (!$this->economy) {
@@ -78,10 +89,20 @@ class GiftCode extends PluginBase implements Listener{
 		  $arg = array_shift($args);
 		  switch($arg){
 			  case "reload":
-				  ///TODO
+				  if($sender->hasPermission("giftcode.ops")){
+					  if($args[0] === "") {
+						  $sender->getMessage("/gift <reload>");
+					  } else {
+						  //TO-DO
+					  }
+					  return true;
+				  }  
+			break;
 			case "get":
 					if($sender->hasPermission("giftcode.members")){
-						if(array_search($args[0] , $this->code->getAll()["Code"]["MCode"])){
+						if ($args[0] === "") {
+							$sender->sendMessage($this->language->get("error.code"));
+						} else if(array_search($args[0] , $this->code->getAll()["Code"]["MCode"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
