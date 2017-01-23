@@ -20,11 +20,7 @@ class GiftCode extends PluginBase implements Listener{
 	public $mtp;
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code" => "1",
-			"money" => "1000",
-			"xu" => "10",
-		));
+		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
@@ -108,8 +104,8 @@ class GiftCode extends PluginBase implements Listener{
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$this->playerUseCode($sender->getName(), $args[0]);
-									MassiveEconomyAPI::getInstance()->payPlayer($sender, $this->code->get("xu"));
-									EconomyAPI::getInstance()->addMoney($sender, $this->code->get("money"));
+									MassiveEconomyAPI::getInstance()->payPlayer($sender, $this->code->getAll()["xu"]);
+									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
