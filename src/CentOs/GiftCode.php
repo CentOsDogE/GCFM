@@ -21,7 +21,7 @@ class GiftCode extends PluginBase implements Listener{
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
 		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML, array(
-			"Code"("MCode") => "1",
+			"Code" => "1",
 			"money" => "1000",
 			"xu" => "10",
 		));
@@ -102,7 +102,7 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if ($args[0] === "") {
 							$sender->sendMessage($this->language->get("error.code"));
-						} else if(array_search($args[0] , $this->code->getAll()["Code"]["MCode"])){
+						} else if(array_search($args[0] , $this->code->getAll()["Code"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
