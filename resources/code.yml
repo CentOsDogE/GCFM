@@ -3,5 +3,5 @@ Code:
     - 1
     - MONEYCODE
     - CODEHERE
-money: 1000 ///ECONOMYAPI-REQUIRED
-xu: 10 ///MASSIVEECONOMY-REQUIRED
+money: 1000
+xu: 10
