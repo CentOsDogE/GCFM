@@ -5,6 +5,7 @@ namespace CentOs;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\CommandSender;
+use pocketmine\command\ConsoleCommandSender;
 use pocketmine\command\Command;
 use pocketmine\Player;
 use pocketmine\item\Item;
@@ -106,6 +107,7 @@ class GiftCode extends PluginBase implements Listener{
 									$this->playerUseCode($sender->getName(), $args[0]);
 									MassiveEconomyAPI::getInstance()->payPlayer($sender, $this->code->getAll()["xu"]);
 									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
+									$this->getServer()->dispatchCommand(new ConsoleCommandSender, "save-all");
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
@@ -122,7 +124,10 @@ class GiftCode extends PluginBase implements Listener{
 			return true;
 		    }
 		}
-}			
+}	
+	public function onDisable(){
+		$this->getServer()->dispatchCommand(new ConsoleCommandSender, "save-all");
+	}
 				
 				
 				
