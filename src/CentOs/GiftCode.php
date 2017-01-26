@@ -124,10 +124,11 @@ class GiftCode extends PluginBase implements Listener{
 			return true;
 		    }
 		}
-}	
 	public function onDisable(){
 		$this->getServer()->dispatchCommand(new ConsoleCommandSender, "save-all");
 	}
+}	
+	
 				
 				
 				
