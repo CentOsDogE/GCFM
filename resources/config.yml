@@ -3,4 +3,5 @@ Code:
     - MONEYCODE
     - CODEHERE
 money: 1000
-xu: 10
+item:
+    - 364:0:0
