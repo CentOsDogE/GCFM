@@ -92,13 +92,13 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if ($args[0] === "") {
 							$sender->sendMessage($this->language->get("error.code"));
-						} else if(array_search($args[0] , $this->code->getAll()["Code"])){
+						} else if(array_search($args[0] , $this->cfg->getAll()["Code"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$this->playerUseCode($sender->getName(), $args[0]);
-									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
+									EconomyAPI::getInstance()->addMoney($sender, $this->cfg->getAll()["money"]);
 									$sender->getInventory()->addItem($this->cfg->getAll()["item"]);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
