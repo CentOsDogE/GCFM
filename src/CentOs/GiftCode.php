@@ -21,7 +21,7 @@ class GiftCode extends PluginBase implements Listener{
 	public $mtp;
 	public function onEnable(){
 		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$this->code = new Config($this->getDataFolder() . "code.yml", Config::YAML);
+		$this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
@@ -35,13 +35,6 @@ class GiftCode extends PluginBase implements Listener{
 		$this->db->exec("CREATE TABLE IF NOT EXISTS playerusingcode (player TEXT PRIMARY KEY COLLATE NOCASE,code TEXT)");
 		$this->db->exec("CREATE TABLE IF NOT EXISTS code (code TEXT)");
 		///END OF SQLITE3
-		$this->mecon = $this->getServer()->getPluginManager()->getPlugin("MassiveEconomy");
-		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "MassiveEconomy " . C::AQUA . "plugin...."); 
-		if (!$this->mecon) {
-			$this->getLogger()->info(C::RED . "Cannot find MassiveEconomy");
-		} else {
-			$this->getLogger()->info(C::GREEN . "MassiveEconomy found");
-		}
 		$this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		$this->getLogger()->info(C::AQUA . "Checking for" . C::GREEN . "EconomyAPI " . C::AQUA . "plugin...."); 
 		if (!$this->economy) {
@@ -105,9 +98,8 @@ class GiftCode extends PluginBase implements Listener{
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$this->playerUseCode($sender->getName(), $args[0]);
-									MassiveEconomyAPI::getInstance()->payPlayer($sender, $this->code->getAll()["xu"]);
 									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
-									$this->getServer()->dispatchCommand(new ConsoleCommandSender, "save-all");
+									$sender->getInventory()->addItem($this->cfg->getAll()["item"]);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
