@@ -37,7 +37,7 @@ class GiftCode extends PluginBase implements Listener{
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
-			"get.item" => "Bạn đã nhận được "
+			"get.item" => "Bạn đã nhận được ",
 			"code.is.used" => "Code đã được dùng.",
 			"error.code" => "Vui lòng nhập code",
 			"defaultlang" => "vie",
