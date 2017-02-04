@@ -24,7 +24,6 @@ class GiftCode extends PluginBase implements Listener{
 		/// ITEMRANDOM PLUGIN COPYRIGHT
 		$this->saveDefaultConfig();
     			$c = $this->getConfig()->getAll();
-   			$t = $c["Interval"] * 1200;
 			$num = 0;
 			foreach ($c["Items"] as $i) {
 			      $r = explode(":",$i);
@@ -84,7 +83,7 @@ class GiftCode extends PluginBase implements Listener{
 		$result->bindValue(":code", $code);
 		$end = $result->execute();	
 	}
-	public function give($p,$data) {
+	public function give($p, $data) {
 		      $item = new Item($data["id"],$data["meta"],$data["amount"]);
 		      $p->getInventory()->addItem($item);
   	}
