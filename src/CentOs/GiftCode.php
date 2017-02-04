@@ -20,12 +20,24 @@ use pocketmine\utils\TextFormat as C;
 class GiftCode extends PluginBase implements Listener{
 	public $mtp;
 	public function onEnable(){
-		@mkdir($this->getDataFolder());                                                                                                                                                                                                                                            
-		$this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
+		@mkdir($this->getDataFolder());
+		/// ITEMRANDOM PLUGIN COPYRIGHT
+		$this->saveDefaultConfig();
+    			$c = $this->getConfig()->getAll();
+   			$t = $c["Interval"] * 1200;
+			$num = 0;
+			foreach ($c["Items"] as $i) {
+			      $r = explode(":",$i);
+			      $this->itemdata[$num] = array("id" => $r[0],"meta" => $r[1],"amount" => $r[2]);
+			      $num++;
+			}
+		/// ITEMRANDOM PLUGIN COPYRIGHT
+		$this->code = new Config($this->getDataFolder() . "config.yml", Config::YAML);
 		$this->language = new Config($this->getDataFolder() . "language.yml", Config::YAML, array(
 			"succeed.code" => "Mã code nhập đã thành công !!",
 			"wrong.code" => "Sai code, code phân biệt chữ Hoa và chữ thường",
 			"fail.code" => "Code thất bại, nếu đây là do lỗi của server vui lòng liên hệ với admin hoặc OP",
+			"get.item" => "Bạn đã nhận được "
 			"code.is.used" => "Code đã được dùng.",
 			"error.code" => "Vui lòng nhập code",
 			"defaultlang" => "vie",
@@ -72,6 +84,13 @@ class GiftCode extends PluginBase implements Listener{
 		$result->bindValue(":code", $code);
 		$end = $result->execute();	
 	}
+	public function give($p,$data) {
+		      $item = new Item($data["id"],$data["meta"],$data["amount"]);
+		      $p->getInventory()->addItem($item);
+  	}
+	 public function generateData() {
+    		return $this->itemdata[mt_rand(0,(count($this->itemdata) - 1))];
+  	}
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
 		  if(count($args) === 0){
 			  return false;
@@ -92,14 +111,16 @@ class GiftCode extends PluginBase implements Listener{
 					if($sender->hasPermission("giftcode.members")){
 						if ($args[0] === "") {
 							$sender->sendMessage($this->language->get("error.code"));
-						} else if(array_search($args[0] , $this->cfg->getAll()["Code"])){
+						} else if(array_search($args[0] , $this->code->getAll()["Code"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
 									$sender->sendMessage($this->language->get("succeed.code"));
 									$this->setCode($args[0]);
+									$data = $this->generateData();
 									$this->playerUseCode($sender->getName(), $args[0]);
-									EconomyAPI::getInstance()->addMoney($sender, $this->cfg->getAll()["money"]);
-									$sender->getInventory()->addItem($this->cfg->getAll()["item"]);
+									$sender->sendMessage($this->language->get("get.item") . "(" . $data["id"] . ":" . $data["meta"] . ")");
+									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
+									$this->give($sender, $data);
 								} else {
 									$sender->sendMessage("You already have this prize !!!!");
 								}
