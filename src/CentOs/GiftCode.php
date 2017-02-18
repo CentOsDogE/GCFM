@@ -19,6 +19,7 @@ use pocketmine\utils\TextFormat as C;
 
 class GiftCode extends PluginBase implements Listener{
 	public $mtp;
+	const PREFIX = "§c--=§eGIFT§aCODE§c=--§r§l";
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
 		/// ITEMRANDOM PLUGIN COPYRIGHT
@@ -113,22 +114,23 @@ class GiftCode extends PluginBase implements Listener{
 						} else if(array_search($args[0] , $this->code->getAll()["Code"])){
 							if (!$this->codeisUsed($args[0])) {
 								if(!$this->playerUse($sender->getName(), $args[0]) and !$this->playerUseToo($sender->getName())){
-									$sender->sendMessage($this->language->get("succeed.code"));
+									$sender->sendMessage(self::PREFIX . $this->language->get("succeed.code"));
 									$this->setCode($args[0]);
 									$data = $this->generateData();
 									$this->playerUseCode($sender->getName(), $args[0]);
-									$sender->sendMessage($this->language->get("get.item") . "(" . $data["id"] . ":" . $data["meta"] . ")");
+									$sender->sendMessage(self::PREFIX . $this->language->get("get.item") . "(" . $data["id"] . ":" . $data["meta"] . ")");
 									EconomyAPI::getInstance()->addMoney($sender, $this->code->getAll()["money"]);
 									$this->give($sender, $data);
+									$sender->sendMessage(self::PREFIX . "§aBạn đã nhận được §f$" .  $this->code->getAll()["money"]);
 								} else {
-									$sender->sendMessage("You already have this prize !!!!");
+									$sender->sendMessage(self::PREFIX . "You already have this prize !!!!");
 								}
 							} else {
-								$sender->sendMessage($this->language->get("code.is.used"));
+								$sender->sendMessage(self::PREFIX . $this->language->get("code.is.used"));
 							}
 						} else {
-							$sender->sendMessage($this->language->get("wrong.code"));
-						 	$sender->sendMessage($this->language->get("fail.code"));
+							$sender->sendMessage(self::PREFIX . $this->language->get("wrong.code"));
+						 	$sender->sendMessage(self::PREFIX . $this->language->get("fail.code"));
 						}
 						return true;
 					}
